@@ -161,7 +161,6 @@
             value="1"
           />
           <label>Connector Status</label>
-
           <select name="ConnectorStatus" id="ConnectorStatus">
             <option value="Available">Available</option>
             <option value="Preparing">Preparing</option>
@@ -171,6 +170,7 @@
             <option value="Finishing">Finishing</option>
             <option value="Reserved">Reserved</option>
             <option value="Faulted">Faulted</option>
+            <option value="DoorOpen">Faulted-DoorOpen</option>
             <option value="Offline">Offline</option>
           </select>
           <button id="mv">Send Meter Values</button>
@@ -553,27 +553,8 @@
         _websocket.send(SN);
       }
       function send_meterValue() {
-        console.log("mv");
-
         sessionStorage.setItem("LastAction", "MeterValues");
         var val = $("#metervalue").val();
-        console.log(1);
-        // var MV = JSON.stringify([
-        //   2,
-        //   id,
-        //   "MeterValues",
-        //   {
-        //     connectorId: 1,
-        //     transactionId: $("#transactionId").val(),
-        //     meterValue: [
-        //       {
-        //         timestamp: new Date().toISOString(),
-        //         sampledValue: [{ value: val }],
-        //       },
-        //     ],
-        //   },
-        // ]);
-
         let MV = [
           2,
           "e7d3de1b-32e3-4fc2-aca9-6fc54725666a",
@@ -821,7 +802,7 @@
         ];
 
         console.log(2, MV);
-        _websocket.send(MV);
+        _websocket.send(JSON.stringify(MV));
       }
 
       $(document).ready(function () {
